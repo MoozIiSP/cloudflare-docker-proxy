@@ -1,3 +1,5 @@
+import DOCS from './help.html';
+
 addEventListener("fetch", (event) => {
   event.passThroughOnException();
   event.respondWith(handleRequest(event.request));
@@ -32,8 +34,17 @@ function routeByHosts(host) {
 
 async function handleRequest(request) {
   const url = new URL(request.url);
-  if (url.pathname == "/") {
-    return Response.redirect(url.protocol + "//" + url.host + "/v2/", 301);
+  // if (url.pathname == "/") {
+  //   return Response.redirect(url.protocol + "//" + url.host + "/v2/", 301);
+  // }
+  // return docs
+  if (url.pathname === "/") {
+    return new Response(DOCS, {
+      status: 200,
+      headers: {
+        "content-type": "text/html"
+      }
+    });
   }
   const upstream = routeByHosts(url.hostname);
   if (upstream === "") {
