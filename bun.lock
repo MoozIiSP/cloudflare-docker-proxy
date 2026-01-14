@@ -1,0 +1,224 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 0,
+  "workspaces": {
+    "": {
+      "name": "cloudflare-docker-proxy",
+      "devDependencies": {
+        "prettier": "^2.4.1",
+        "wrangler": "^3.114.9",
+      },
+    },
+  },
+  "packages": {
+    "@cloudflare/kv-asset-handler": ["@cloudflare/kv-asset-handler@https://registry.npmjs.org/@cloudflare/kv-asset-handler/-/kv-asset-handler-0.3.4.tgz", { "dependencies": { "mime": "^3.0.0" } }],
+
+    "@cloudflare/unenv-preset": ["@cloudflare/unenv-preset@https://registry.npmjs.org/@cloudflare/unenv-preset/-/unenv-preset-2.0.2.tgz", {}],
+
+    "@cloudflare/workerd-darwin-64": ["@cloudflare/workerd-darwin-64@https://registry.npmjs.org/@cloudflare/workerd-darwin-64/-/workerd-darwin-64-1.20250408.0.tgz", {}],
+
+    "@cloudflare/workerd-darwin-arm64": ["@cloudflare/workerd-darwin-arm64@https://registry.npmjs.org/@cloudflare/workerd-darwin-arm64/-/workerd-darwin-arm64-1.20250408.0.tgz", {}],
+
+    "@cloudflare/workerd-linux-64": ["@cloudflare/workerd-linux-64@https://registry.npmjs.org/@cloudflare/workerd-linux-64/-/workerd-linux-64-1.20250408.0.tgz", {}],
+
+    "@cloudflare/workerd-linux-arm64": ["@cloudflare/workerd-linux-arm64@https://registry.npmjs.org/@cloudflare/workerd-linux-arm64/-/workerd-linux-arm64-1.20250408.0.tgz", {}],
+
+    "@cloudflare/workerd-windows-64": ["@cloudflare/workerd-windows-64@https://registry.npmjs.org/@cloudflare/workerd-windows-64/-/workerd-windows-64-1.20250408.0.tgz", {}],
+
+    "@cspotcode/source-map-support": ["@cspotcode/source-map-support@https://registry.npmjs.org/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz", { "dependencies": { "@jridgewell/trace-mapping": "0.3.9" } }],
+
+    "@emnapi/runtime": ["@emnapi/runtime@https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.4.3.tgz", { "dependencies": { "tslib": "^2.4.0" } }],
+
+    "@esbuild-plugins/node-globals-polyfill": ["@esbuild-plugins/node-globals-polyfill@https://registry.npmjs.org/@esbuild-plugins/node-globals-polyfill/-/node-globals-polyfill-0.2.3.tgz", {}],
+
+    "@esbuild-plugins/node-modules-polyfill": ["@esbuild-plugins/node-modules-polyfill@https://registry.npmjs.org/@esbuild-plugins/node-modules-polyfill/-/node-modules-polyfill-0.2.2.tgz", { "dependencies": { "escape-string-regexp": "^4.0.0", "rollup-plugin-node-polyfills": "^0.2.1" } }],
+
+    "@esbuild/android-arm": ["@esbuild/android-arm@https://registry.npmjs.org/@esbuild/android-arm/-/android-arm-0.17.19.tgz", {}],
+
+    "@esbuild/android-arm64": ["@esbuild/android-arm64@https://registry.npmjs.org/@esbuild/android-arm64/-/android-arm64-0.17.19.tgz", {}],
+
+    "@esbuild/android-x64": ["@esbuild/android-x64@https://registry.npmjs.org/@esbuild/android-x64/-/android-x64-0.17.19.tgz", {}],
+
+    "@esbuild/darwin-arm64": ["@esbuild/darwin-arm64@https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.17.19.tgz", {}],
+
+    "@esbuild/darwin-x64": ["@esbuild/darwin-x64@https://registry.npmjs.org/@esbuild/darwin-x64/-/darwin-x64-0.17.19.tgz", {}],
+
+    "@esbuild/freebsd-arm64": ["@esbuild/freebsd-arm64@https://registry.npmjs.org/@esbuild/freebsd-arm64/-/freebsd-arm64-0.17.19.tgz", {}],
+
+    "@esbuild/freebsd-x64": ["@esbuild/freebsd-x64@https://registry.npmjs.org/@esbuild/freebsd-x64/-/freebsd-x64-0.17.19.tgz", {}],
+
+    "@esbuild/linux-arm": ["@esbuild/linux-arm@https://registry.npmjs.org/@esbuild/linux-arm/-/linux-arm-0.17.19.tgz", {}],
+
+    "@esbuild/linux-arm64": ["@esbuild/linux-arm64@https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-0.17.19.tgz", {}],
+
+    "@esbuild/linux-ia32": ["@esbuild/linux-ia32@https://registry.npmjs.org/@esbuild/linux-ia32/-/linux-ia32-0.17.19.tgz", {}],
+
+    "@esbuild/linux-loong64": ["@esbuild/linux-loong64@https://registry.npmjs.org/@esbuild/linux-loong64/-/linux-loong64-0.17.19.tgz", {}],
+
+    "@esbuild/linux-mips64el": ["@esbuild/linux-mips64el@https://registry.npmjs.org/@esbuild/linux-mips64el/-/linux-mips64el-0.17.19.tgz", {}],
+
+    "@esbuild/linux-ppc64": ["@esbuild/linux-ppc64@https://registry.npmjs.org/@esbuild/linux-ppc64/-/linux-ppc64-0.17.19.tgz", {}],
+
+    "@esbuild/linux-riscv64": ["@esbuild/linux-riscv64@https://registry.npmjs.org/@esbuild/linux-riscv64/-/linux-riscv64-0.17.19.tgz", {}],
+
+    "@esbuild/linux-s390x": ["@esbuild/linux-s390x@https://registry.npmjs.org/@esbuild/linux-s390x/-/linux-s390x-0.17.19.tgz", {}],
+
+    "@esbuild/linux-x64": ["@esbuild/linux-x64@https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.17.19.tgz", {}],
+
+    "@esbuild/netbsd-x64": ["@esbuild/netbsd-x64@https://registry.npmjs.org/@esbuild/netbsd-x64/-/netbsd-x64-0.17.19.tgz", {}],
+
+    "@esbuild/openbsd-x64": ["@esbuild/openbsd-x64@https://registry.npmjs.org/@esbuild/openbsd-x64/-/openbsd-x64-0.17.19.tgz", {}],
+
+    "@esbuild/sunos-x64": ["@esbuild/sunos-x64@https://registry.npmjs.org/@esbuild/sunos-x64/-/sunos-x64-0.17.19.tgz", {}],
+
+    "@esbuild/win32-arm64": ["@esbuild/win32-arm64@https://registry.npmjs.org/@esbuild/win32-arm64/-/win32-arm64-0.17.19.tgz", {}],
+
+    "@esbuild/win32-ia32": ["@esbuild/win32-ia32@https://registry.npmjs.org/@esbuild/win32-ia32/-/win32-ia32-0.17.19.tgz", {}],
+
+    "@esbuild/win32-x64": ["@esbuild/win32-x64@https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.17.19.tgz", {}],
+
+    "@fastify/busboy": ["@fastify/busboy@https://registry.npmjs.org/@fastify/busboy/-/busboy-2.1.1.tgz", {}],
+
+    "@img/sharp-darwin-arm64": ["@img/sharp-darwin-arm64@https://registry.npmjs.org/@img/sharp-darwin-arm64/-/sharp-darwin-arm64-0.33.5.tgz", { "optionalDependencies": { "@img/sharp-libvips-darwin-arm64": "1.0.4" } }],
+
+    "@img/sharp-darwin-x64": ["@img/sharp-darwin-x64@https://registry.npmjs.org/@img/sharp-darwin-x64/-/sharp-darwin-x64-0.33.5.tgz", { "optionalDependencies": { "@img/sharp-libvips-darwin-x64": "1.0.4" } }],
+
+    "@img/sharp-libvips-darwin-arm64": ["@img/sharp-libvips-darwin-arm64@https://registry.npmjs.org/@img/sharp-libvips-darwin-arm64/-/sharp-libvips-darwin-arm64-1.0.4.tgz", {}],
+
+    "@img/sharp-libvips-darwin-x64": ["@img/sharp-libvips-darwin-x64@https://registry.npmjs.org/@img/sharp-libvips-darwin-x64/-/sharp-libvips-darwin-x64-1.0.4.tgz", {}],
+
+    "@img/sharp-libvips-linux-arm": ["@img/sharp-libvips-linux-arm@https://registry.npmjs.org/@img/sharp-libvips-linux-arm/-/sharp-libvips-linux-arm-1.0.5.tgz", {}],
+
+    "@img/sharp-libvips-linux-arm64": ["@img/sharp-libvips-linux-arm64@https://registry.npmjs.org/@img/sharp-libvips-linux-arm64/-/sharp-libvips-linux-arm64-1.0.4.tgz", {}],
+
+    "@img/sharp-libvips-linux-s390x": ["@img/sharp-libvips-linux-s390x@https://registry.npmjs.org/@img/sharp-libvips-linux-s390x/-/sharp-libvips-linux-s390x-1.0.4.tgz", {}],
+
+    "@img/sharp-libvips-linux-x64": ["@img/sharp-libvips-linux-x64@https://registry.npmjs.org/@img/sharp-libvips-linux-x64/-/sharp-libvips-linux-x64-1.0.4.tgz", {}],
+
+    "@img/sharp-libvips-linuxmusl-arm64": ["@img/sharp-libvips-linuxmusl-arm64@https://registry.npmjs.org/@img/sharp-libvips-linuxmusl-arm64/-/sharp-libvips-linuxmusl-arm64-1.0.4.tgz", {}],
+
+    "@img/sharp-libvips-linuxmusl-x64": ["@img/sharp-libvips-linuxmusl-x64@https://registry.npmjs.org/@img/sharp-libvips-linuxmusl-x64/-/sharp-libvips-linuxmusl-x64-1.0.4.tgz", {}],
+
+    "@img/sharp-linux-arm": ["@img/sharp-linux-arm@https://registry.npmjs.org/@img/sharp-linux-arm/-/sharp-linux-arm-0.33.5.tgz", { "optionalDependencies": { "@img/sharp-libvips-linux-arm": "1.0.5" } }],
+
+    "@img/sharp-linux-arm64": ["@img/sharp-linux-arm64@https://registry.npmjs.org/@img/sharp-linux-arm64/-/sharp-linux-arm64-0.33.5.tgz", { "optionalDependencies": { "@img/sharp-libvips-linux-arm64": "1.0.4" } }],
+
+    "@img/sharp-linux-s390x": ["@img/sharp-linux-s390x@https://registry.npmjs.org/@img/sharp-linux-s390x/-/sharp-linux-s390x-0.33.5.tgz", { "optionalDependencies": { "@img/sharp-libvips-linux-s390x": "1.0.4" } }],
+
+    "@img/sharp-linux-x64": ["@img/sharp-linux-x64@https://registry.npmjs.org/@img/sharp-linux-x64/-/sharp-linux-x64-0.33.5.tgz", { "optionalDependencies": { "@img/sharp-libvips-linux-x64": "1.0.4" } }],
+
+    "@img/sharp-linuxmusl-arm64": ["@img/sharp-linuxmusl-arm64@https://registry.npmjs.org/@img/sharp-linuxmusl-arm64/-/sharp-linuxmusl-arm64-0.33.5.tgz", { "optionalDependencies": { "@img/sharp-libvips-linuxmusl-arm64": "1.0.4" } }],
+
+    "@img/sharp-linuxmusl-x64": ["@img/sharp-linuxmusl-x64@https://registry.npmjs.org/@img/sharp-linuxmusl-x64/-/sharp-linuxmusl-x64-0.33.5.tgz", { "optionalDependencies": { "@img/sharp-libvips-linuxmusl-x64": "1.0.4" } }],
+
+    "@img/sharp-wasm32": ["@img/sharp-wasm32@https://registry.npmjs.org/@img/sharp-wasm32/-/sharp-wasm32-0.33.5.tgz", { "dependencies": { "@emnapi/runtime": "^1.2.0" } }],
+
+    "@img/sharp-win32-ia32": ["@img/sharp-win32-ia32@https://registry.npmjs.org/@img/sharp-win32-ia32/-/sharp-win32-ia32-0.33.5.tgz", {}],
+
+    "@img/sharp-win32-x64": ["@img/sharp-win32-x64@https://registry.npmjs.org/@img/sharp-win32-x64/-/sharp-win32-x64-0.33.5.tgz", {}],
+
+    "@jridgewell/resolve-uri": ["@jridgewell/resolve-uri@https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.2.tgz", {}],
+
+    "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.5.0.tgz", {}],
+
+    "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.9.tgz", { "dependencies": { "@jridgewell/resolve-uri": "^3.0.3", "@jridgewell/sourcemap-codec": "^1.4.10" } }],
+
+    "acorn": ["acorn@https://registry.npmjs.org/acorn/-/acorn-8.14.0.tgz", {}],
+
+    "acorn-walk": ["acorn-walk@https://registry.npmjs.org/acorn-walk/-/acorn-walk-8.3.2.tgz", {}],
+
+    "as-table": ["as-table@https://registry.npmjs.org/as-table/-/as-table-1.0.55.tgz", { "dependencies": { "printable-characters": "^1.0.42" } }],
+
+    "blake3-wasm": ["blake3-wasm@https://registry.npmjs.org/blake3-wasm/-/blake3-wasm-2.1.5.tgz", {}],
+
+    "color": ["color@https://registry.npmjs.org/color/-/color-4.2.3.tgz", { "dependencies": { "color-convert": "^2.0.1", "color-string": "^1.9.0" } }],
+
+    "color-convert": ["color-convert@https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz", { "dependencies": { "color-name": "~1.1.4" } }],
+
+    "color-name": ["color-name@https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz", {}],
+
+    "color-string": ["color-string@https://registry.npmjs.org/color-string/-/color-string-1.9.1.tgz", { "dependencies": { "color-name": "^1.0.0", "simple-swizzle": "^0.2.2" } }],
+
+    "cookie": ["cookie@https://registry.npmjs.org/cookie/-/cookie-0.7.2.tgz", {}],
+
+    "data-uri-to-buffer": ["data-uri-to-buffer@https://registry.npmjs.org/data-uri-to-buffer/-/data-uri-to-buffer-2.0.2.tgz", {}],
+
+    "defu": ["defu@https://registry.npmjs.org/defu/-/defu-6.1.4.tgz", {}],
+
+    "detect-libc": ["detect-libc@https://registry.npmjs.org/detect-libc/-/detect-libc-2.0.4.tgz", {}],
+
+    "esbuild": ["esbuild@https://registry.npmjs.org/esbuild/-/esbuild-0.17.19.tgz", { "optionalDependencies": { "@esbuild/android-arm": "0.17.19", "@esbuild/android-arm64": "0.17.19", "@esbuild/android-x64": "0.17.19", "@esbuild/darwin-arm64": "0.17.19", "@esbuild/darwin-x64": "0.17.19", "@esbuild/freebsd-arm64": "0.17.19", "@esbuild/freebsd-x64": "0.17.19", "@esbuild/linux-arm": "0.17.19", "@esbuild/linux-arm64": "0.17.19", "@esbuild/linux-ia32": "0.17.19", "@esbuild/linux-loong64": "0.17.19", "@esbuild/linux-mips64el": "0.17.19", "@esbuild/linux-ppc64": "0.17.19", "@esbuild/linux-riscv64": "0.17.19", "@esbuild/linux-s390x": "0.17.19", "@esbuild/linux-x64": "0.17.19", "@esbuild/netbsd-x64": "0.17.19", "@esbuild/openbsd-x64": "0.17.19", "@esbuild/sunos-x64": "0.17.19", "@esbuild/win32-arm64": "0.17.19", "@esbuild/win32-ia32": "0.17.19", "@esbuild/win32-x64": "0.17.19" } }],
+
+    "escape-string-regexp": ["escape-string-regexp@https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz", {}],
+
+    "estree-walker": ["estree-walker@https://registry.npmjs.org/estree-walker/-/estree-walker-0.6.1.tgz", {}],
+
+    "exit-hook": ["exit-hook@https://registry.npmjs.org/exit-hook/-/exit-hook-2.2.1.tgz", {}],
+
+    "exsolve": ["exsolve@https://registry.npmjs.org/exsolve/-/exsolve-1.0.5.tgz", {}],
+
+    "fsevents": ["fsevents@https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz", {}],
+
+    "get-source": ["get-source@https://registry.npmjs.org/get-source/-/get-source-2.0.12.tgz", { "dependencies": { "data-uri-to-buffer": "^2.0.0", "source-map": "^0.6.1" } }],
+
+    "glob-to-regexp": ["glob-to-regexp@https://registry.npmjs.org/glob-to-regexp/-/glob-to-regexp-0.4.1.tgz", {}],
+
+    "is-arrayish": ["is-arrayish@https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.3.2.tgz", {}],
+
+    "magic-string": ["magic-string@https://registry.npmjs.org/magic-string/-/magic-string-0.25.9.tgz", { "dependencies": { "sourcemap-codec": "^1.4.8" } }],
+
+    "mime": ["mime@https://registry.npmjs.org/mime/-/mime-3.0.0.tgz", {}],
+
+    "miniflare": ["miniflare@https://registry.npmjs.org/miniflare/-/miniflare-3.20250408.2.tgz", { "dependencies": { "@cspotcode/source-map-support": "0.8.1", "acorn": "8.14.0", "acorn-walk": "8.3.2", "exit-hook": "2.2.1", "glob-to-regexp": "0.4.1", "stoppable": "1.1.0", "undici": "^5.28.5", "workerd": "1.20250408.0", "ws": "8.18.0", "youch": "3.3.4", "zod": "3.22.3" } }],
+
+    "mustache": ["mustache@https://registry.npmjs.org/mustache/-/mustache-4.2.0.tgz", {}],
+
+    "ohash": ["ohash@https://registry.npmjs.org/ohash/-/ohash-2.0.11.tgz", {}],
+
+    "path-to-regexp": ["path-to-regexp@https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-6.3.0.tgz", {}],
+
+    "pathe": ["pathe@https://registry.npmjs.org/pathe/-/pathe-2.0.3.tgz", {}],
+
+    "prettier": ["prettier@https://registry.npmjs.org/prettier/-/prettier-2.6.0.tgz", {}],
+
+    "printable-characters": ["printable-characters@https://registry.npmjs.org/printable-characters/-/printable-characters-1.0.42.tgz", {}],
+
+    "rollup-plugin-inject": ["rollup-plugin-inject@https://registry.npmjs.org/rollup-plugin-inject/-/rollup-plugin-inject-3.0.2.tgz", { "dependencies": { "estree-walker": "^0.6.1", "magic-string": "^0.25.3", "rollup-pluginutils": "^2.8.1" } }],
+
+    "rollup-plugin-node-polyfills": ["rollup-plugin-node-polyfills@https://registry.npmjs.org/rollup-plugin-node-polyfills/-/rollup-plugin-node-polyfills-0.2.1.tgz", { "dependencies": { "rollup-plugin-inject": "^3.0.0" } }],
+
+    "rollup-pluginutils": ["rollup-pluginutils@https://registry.npmjs.org/rollup-pluginutils/-/rollup-pluginutils-2.8.2.tgz", { "dependencies": { "estree-walker": "^0.6.1" } }],
+
+    "semver": ["semver@https://registry.npmjs.org/semver/-/semver-7.7.2.tgz", {}],
+
+    "sharp": ["sharp@https://registry.npmjs.org/sharp/-/sharp-0.33.5.tgz", { "dependencies": { "color": "^4.2.3", "detect-libc": "^2.0.3", "semver": "^7.6.3" }, "optionalDependencies": { "@img/sharp-darwin-arm64": "0.33.5", "@img/sharp-darwin-x64": "0.33.5", "@img/sharp-libvips-darwin-arm64": "1.0.4", "@img/sharp-libvips-darwin-x64": "1.0.4", "@img/sharp-libvips-linux-arm": "1.0.5", "@img/sharp-libvips-linux-arm64": "1.0.4", "@img/sharp-libvips-linux-s390x": "1.0.4", "@img/sharp-libvips-linux-x64": "1.0.4", "@img/sharp-libvips-linuxmusl-arm64": "1.0.4", "@img/sharp-libvips-linuxmusl-x64": "1.0.4", "@img/sharp-linux-arm": "0.33.5", "@img/sharp-linux-arm64": "0.33.5", "@img/sharp-linux-s390x": "0.33.5", "@img/sharp-linux-x64": "0.33.5", "@img/sharp-linuxmusl-arm64": "0.33.5", "@img/sharp-linuxmusl-x64": "0.33.5", "@img/sharp-wasm32": "0.33.5", "@img/sharp-win32-ia32": "0.33.5", "@img/sharp-win32-x64": "0.33.5" } }],
+
+    "simple-swizzle": ["simple-swizzle@https://registry.npmjs.org/simple-swizzle/-/simple-swizzle-0.2.2.tgz", { "dependencies": { "is-arrayish": "^0.3.1" } }],
+
+    "source-map": ["source-map@https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz", {}],
+
+    "sourcemap-codec": ["sourcemap-codec@https://registry.npmjs.org/sourcemap-codec/-/sourcemap-codec-1.4.8.tgz", {}],
+
+    "stacktracey": ["stacktracey@https://registry.npmjs.org/stacktracey/-/stacktracey-2.1.8.tgz", { "dependencies": { "as-table": "^1.0.36", "get-source": "^2.0.12" } }],
+
+    "stoppable": ["stoppable@https://registry.npmjs.org/stoppable/-/stoppable-1.1.0.tgz", {}],
+
+    "tslib": ["tslib@https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz", {}],
+
+    "ufo": ["ufo@https://registry.npmjs.org/ufo/-/ufo-1.6.1.tgz", {}],
+
+    "undici": ["undici@https://registry.npmjs.org/undici/-/undici-5.29.0.tgz", { "dependencies": { "@fastify/busboy": "^2.0.0" } }],
+
+    "unenv": ["unenv@https://registry.npmjs.org/unenv/-/unenv-2.0.0-rc.14.tgz", { "dependencies": { "defu": "^6.1.4", "exsolve": "^1.0.1", "ohash": "^2.0.10", "pathe": "^2.0.3", "ufo": "^1.5.4" } }],
+
+    "workerd": ["workerd@https://registry.npmjs.org/workerd/-/workerd-1.20250408.0.tgz", { "optionalDependencies": { "@cloudflare/workerd-darwin-64": "1.20250408.0", "@cloudflare/workerd-darwin-arm64": "1.20250408.0", "@cloudflare/workerd-linux-64": "1.20250408.0", "@cloudflare/workerd-linux-arm64": "1.20250408.0", "@cloudflare/workerd-windows-64": "1.20250408.0" } }],
+
+    "wrangler": ["wrangler@https://registry.npmjs.org/wrangler/-/wrangler-3.114.9.tgz", { "dependencies": { "@cloudflare/kv-asset-handler": "0.3.4", "@cloudflare/unenv-preset": "2.0.2", "@esbuild-plugins/node-globals-polyfill": "0.2.3", "@esbuild-plugins/node-modules-polyfill": "0.2.2", "blake3-wasm": "2.1.5", "esbuild": "0.17.19", "miniflare": "3.20250408.2", "path-to-regexp": "6.3.0", "unenv": "2.0.0-rc.14", "workerd": "1.20250408.0" }, "optionalDependencies": { "fsevents": "~2.3.2", "sharp": "^0.33.5" } }],
+
+    "ws": ["ws@https://registry.npmjs.org/ws/-/ws-8.18.0.tgz", {}],
+
+    "youch": ["youch@https://registry.npmjs.org/youch/-/youch-3.3.4.tgz", { "dependencies": { "cookie": "^0.7.1", "mustache": "^4.2.0", "stacktracey": "^2.1.8" } }],
+
+    "zod": ["zod@https://registry.npmjs.org/zod/-/zod-3.22.3.tgz", {}],
+  }
+}

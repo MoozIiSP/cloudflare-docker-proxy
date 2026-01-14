@@ -1,140 +1,355 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>镜像使用说明</title>
+    <title>镜像使用指南 | Docker Proxy</title>
+    <meta name="description" content="Cloudflare Docker Proxy 镜像运行指南，加速您的 Docker 镜像拉取。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --accent: #22d3ee;
+            --glass-blur: 16px;
+        }
+
+        body,
+        html {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            height: 100%;
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: relative;
+
+        /* Background Animation */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
-        .github-link {
+
+        .bg-glow::before {
+            content: '';
             position: absolute;
-            top: 10px;
-            right: 20px;
-            color: #fff;
-            text-decoration: none;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0, 0, 0, 0) 50%);
+            animation: rotate 20s linear infinite;
         }
-        .github-icon {
-            width: 24px;
-            height: 24px;
-            vertical-align: middle;
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
+
         .container {
+            width: 100%;
             max-width: 800px;
-            margin: 40px auto;
+            padding: 24px;
+            box-sizing: border-box;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.02em;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 16px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 24px 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+        }
+
+        .section-title svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .description {
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+
+        .code-container {
+            position: relative;
+            margin-bottom: 24px;
+            group: hover;
+        }
+
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
             padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 0;
+            overflow-x: auto;
+            position: relative;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+
+        code {
+            font-family: inherit;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-main);
+            padding: 6px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            opacity: 0;
+            transform: translateY(-5px);
+        }
+
+        .code-container:hover .copy-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .copy-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer a:hover {
+            color: var(--primary);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
         }
-        .content {
-            margin-bottom: 20px;
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
-        .footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #333;
-            color: #fff;
-        }
-        pre {
-            background-color: #272822;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-        code {
-            font-family: 'Source Code Pro', monospace;
-        }
-        a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        @media (max-width: 600px) {
-            .container {
-                margin: 20px;
-                padding: 15px;
+
+        @media (max-width: 640px) {
+            .card {
+                padding: 24px;
             }
-            .header {
-                padding: 15px 0;
+
+            h1 {
+                font-size: 24px;
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
-<div class="header">
-    <h1>镜像使用说明</h1>
-    <a href="https://github.com/lixd/cloudflare-docker-proxy" target="_blank" class="github-link">
-        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" class="github-icon">
-    </a>
-</div>
-<div class="container">
-    <div class="content">
-        <p>为了加速 Docker 镜像拉取，你可以使用以下命令设置 registry mirror:</p>
-        <pre><code id="registry-config">sudo tee /etc/docker/daemon.json &lt;&lt;EOF
+    <div class="bg-glow"></div>
+    <div class="container">
+        <main class="card">
+            <header class="header">
+                <h1>镜像使用指南</h1>
+                <p class="subtitle">Cloudflare 驱动的极速 Docker 镜像加速服务</p>
+            </header>
+
+            <section>
+                <div class="section-title">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    设置 Registry Mirror
+                </div>
+                <p class="description">执行以下命令，将本服务设置为默认 Docker 镜像源：</p>
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyCode('registry-config')">复制</button>
+                    <pre><code id="registry-config">sudo tee /etc/docker/daemon.json <<EOF
 {
     "registry-mirrors": ["https://{{host}}"]
 }
 EOF
-# 配置完后需要重启 Docker 服务
-sudo systemctl restart docker
-</code></pre>
-        <p>使用该代理从不同的镜像仓库拉取镜像，请参考以下命令：</p>
-        <pre><code id="commands">
-# docker pull nginx:latest
-docker pull docker.{{host}}/library/nginx:latest  # 拉取 Docker 官方镜像
+sudo systemctl restart docker</code></pre>
+                </div>
+            </section>
 
-# docker pull quay.io/coreos/etcd:latest
-docker pull quay.{{host}}/coreos/etcd:latest  # 拉取 Quay 镜像
+            <section>
+                <div class="section-title">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    快捷拉取命令
+                </div>
+                <p class="description">也可以通过前缀方式，直接从不同仓库拉取镜像：</p>
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyCode('commands')">复制</button>
+                    <pre><code id="commands"># 拉取 Docker 官方镜像
+docker pull docker.{{host}}/library/nginx:latest
 
-# docker pull gcr.io/google-containers/busybox:latest
-docker pull gcr.{{host}}/google-containers/busybox:latest  # 拉取 GCR 镜像
+# 拉取 Quay 镜像
+docker pull quay.{{host}}/coreos/etcd:latest
 
-# docker pull k8s.gcr.io/pause:latest
-docker pull k8s-gcr.{{host}}/pause:latest  # 拉取 k8s.gcr.io 镜像
+# 拉取 GCR 镜像
+docker pull gcr.{{host}}/google-containers/busybox:latest
 
-# docker pull registry.k8s.io/pause:latest
-docker pull k8s.{{host}}/pause:latest  # 拉取 registry.k8s.io 镜像
+# 拉取 GitHub 容器镜像
+docker pull ghcr.{{host}}/github/super-linter:latest</code></pre>
+                </div>
+            </section>
 
-# docker pull ghcr.io/github/super-linter:latest
-docker pull ghcr.{{host}}/github/super-linter:latest  # 拉取 GitHub 容器镜像
-
-# docker pull docker.cloudsmith.io/public/repo/image:latest
-docker pull cloudsmith.{{host}}/public/repo/image:latest  # 拉取 Cloudsmith 镜像
-</code></pre>
-        <p>为了避免 Worker 用量耗尽，你可以手动 pull 镜像然后 re-tag 之后 push 至本地镜像仓库。</p>
+            <footer class="footer">
+                <a href="https://github.com/lixd/cloudflare-docker-proxy" target="_blank">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.042-1.416-4.042-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                    GitHub Project
+                </a>
+                <a href="https://lixueduan.com" target="_blank">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9h18">
+                        </path>
+                    </svg>
+                    访问博客
+                </a>
+            </footer>
+        </main>
     </div>
-</div>
-<div class="footer">
-    <p>Powered by Cloudflare Workers</p>
-    <p><a href="https://lixueduan.com" target="_blank">访问博客 探索云原生</a></p>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const host = window.location.hostname;
-        const mainDomain = host.split('.').slice(-2).join('.');
-        const registryConfigElement = document.getElementById('registry-config');
-        const commandsElement = document.getElementById('commands');
 
-        registryConfigElement.innerHTML = registryConfigElement.innerHTML.replace(/{{host}}/g, host);
-        commandsElement.innerHTML = commandsElement.innerHTML.replace(/{{host}}/g, mainDomain);
-    });
-</script>
+    <script>
+        function copyCode(id) {
+            const code = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = event.target;
+                const originalText = btn.innerText;
+                btn.innerText = '已复制!';
+                btn.style.background = '#22c55e';
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            });
+        }
+    </script>
 </body>
+
 </html>

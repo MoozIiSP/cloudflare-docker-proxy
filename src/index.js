@@ -5,6 +5,21 @@ addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
 });
 
+// Read bindings from the runtime (Cloudflare vars/secrets) with safe fallbacks for build time
+function getBinding(key, fallback) {
+  if (typeof process !== "undefined" && process.env && process.env[key]) {
+    return process.env[key];
+  }
+  if (typeof globalThis !== "undefined" && typeof globalThis[key] !== "undefined") {
+    return globalThis[key];
+  }
+  return fallback;
+}
+
+const CUSTOM_DOMAIN = getBinding("CUSTOM_DOMAIN", "saymi-labs.top");
+const MODE = getBinding("MODE", "production");
+const TARGET_UPSTREAM = getBinding("TARGET_UPSTREAM", "");
+
 const dockerHub = "https://registry-1.docker.io";
 
 const routes = {
@@ -39,7 +54,8 @@ async function handleRequest(request) {
   // }
   // return docs
   if (url.pathname === "/") {
-    return new Response(DOCS, {
+    const html = DOCS.replace(/\{\{host\}\}/g, CUSTOM_DOMAIN);
+    return new Response(html, {
       status: 200,
       headers: {
         "content-type": "text/html"
@@ -59,6 +75,24 @@ async function handleRequest(request) {
   }
   const isDockerHub = upstream == dockerHub;
   const authorization = request.headers.get("Authorization");
+  // block _catalog endpoint for Docker Hub to avoid misleading 401 responses
+  if (url.pathname === "/v2/_catalog" && isDockerHub) {
+    return new Response(
+      JSON.stringify({
+        errors: [{
+          code: "UNSUPPORTED",
+          message: "The catalog API is not supported by Docker Hub",
+          detail: "Docker Hub has disabled the /v2/_catalog endpoint due to performance considerations. Please use specific image names instead."
+        }]
+      }),
+      {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+  }
   if (url.pathname == "/v2/") {
     const newUrl = new URL(upstream + "/v2/");
     const headers = new Headers();
