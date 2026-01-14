@@ -10,6 +10,11 @@ module.exports = {
   module: {
     rules: [
       {
+        // 让 html 以“字符串”的形式被 import
+        test: /\.html$/i,
+        type: "asset/source",
+      },
+      {
         include: /node_modules/,
         test: /\.mjs$/,
         type: "javascript/auto",
