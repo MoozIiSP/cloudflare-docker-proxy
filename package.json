@@ -9,8 +9,8 @@
   "scripts": {
     "format": "bunx prettier --write '**/*.{js,css,json,md}'",
     "build": "bun run build-esbuild.js",
-    "dev": "bun run build && wrangler dev dist/main.js --env dev",
-    "deploy": "bun run build && wrangler deploy --env production"
+    "dev": "bun run build && bunx wrangler dev dist/main.js --env dev",
+    "deploy": "bun run build && bunx wrangler deploy --env production"
   },
   "devDependencies": {
     "prettier": "^2.4.1",
