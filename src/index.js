@@ -135,7 +135,7 @@ async function handleRequest(request) {
         scope = scopeParts.join(":");
       }
     }
-    return await fetchToken(wwwAuthenticate, scope, authorization);
+    return await fetchToken(wwwAuthenticate, scope, authorization, url.hostname);
   }
   // redirect for DockerHub library images
   // Example: /v2/busybox/manifests/latest => /v2/library/busybox/manifests/latest
@@ -158,6 +158,18 @@ async function handleRequest(request) {
   });
   const resp = await fetch(newReq);
   if (resp.status == 401) {
+    // If client already provided authorization but still got 401,
+    // return the upstream error (e.g., image not found, insufficient scope)
+    if (authorization) {
+      const respHeaders = new Headers(resp.headers);
+      respHeaders.set("Access-Control-Allow-Origin", "*");
+      return new Response(resp.body, {
+        status: resp.status,
+        statusText: resp.statusText,
+        headers: respHeaders
+      });
+    }
+    // Otherwise, challenge for authentication
     return responseUnauthorized(url);
   }
   // handle dockerhub blob redirect manually
@@ -169,7 +181,15 @@ async function handleRequest(request) {
     });
     return redirectResp;
   }
-  return resp;
+  // Ensure proper headers for all responses
+  const respHeaders = new Headers(resp.headers);
+  respHeaders.set("Access-Control-Allow-Origin", "*");
+
+  return new Response(resp.body, {
+    status: resp.status,
+    statusText: resp.statusText,
+    headers: respHeaders
+  });
 }
 
 function parseAuthenticate(authenticateStr) {
@@ -186,7 +206,7 @@ function parseAuthenticate(authenticateStr) {
   };
 }
 
-async function fetchToken(wwwAuthenticate, scope, authorization) {
+async function fetchToken(wwwAuthenticate, scope, authorization, hostname) {
   const url = new URL(wwwAuthenticate.realm);
   if (wwwAuthenticate.service.length) {
     url.searchParams.set("service", wwwAuthenticate.service);
@@ -194,11 +214,79 @@ async function fetchToken(wwwAuthenticate, scope, authorization) {
   if (scope) {
     url.searchParams.set("scope", scope);
   }
+
+  // Create a cache key based on hostname, scope, and authorization
+  // Use SHA-256 to hash the authorization header for security
+  let cacheKey = `token:${hostname}:${scope || 'default'}`;
+  if (authorization) {
+    // Hash the authorization header to avoid storing credentials in cache key
+    const authHash = await crypto.subtle.digest(
+      'SHA-256',
+      new TextEncoder().encode(authorization)
+    );
+    const hashHex = Array.from(new Uint8Array(authHash))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+    cacheKey += `:${hashHex.slice(0, 16)}`; // Use first 16 chars of hash
+  } else {
+    cacheKey += ':anonymous';
+  }
+
+  // Try to get from cache
+  const cache = caches.default;
+  const cacheUrl = `https://token-cache.internal/${cacheKey}`;
+  let cachedResponse = await cache.match(cacheUrl);
+
+  if (cachedResponse) {
+    // Return cached token if still valid
+    return new Response(cachedResponse.body, {
+      status: cachedResponse.status,
+      statusText: cachedResponse.statusText,
+      headers: new Headers(cachedResponse.headers)
+    });
+  }
+
+  // Fetch new token from upstream
   const headers = new Headers();
   if (authorization) {
     headers.set("Authorization", authorization);
   }
-  return await fetch(url, { method: "GET", headers: headers });
+  const resp = await fetch(url, { method: "GET", headers: headers });
+
+  // Only cache successful responses (200)
+  if (resp.status === 200) {
+    const respClone = resp.clone();
+    const respHeaders = new Headers(resp.headers);
+    respHeaders.set("Access-Control-Allow-Origin", "*");
+
+    // Set cache expiration to 4 minutes (shorter than 5-minute token expiry for safety)
+    respHeaders.set("Cache-Control", "public, max-age=240");
+
+    const cacheResponse = new Response(respClone.body, {
+      status: resp.status,
+      statusText: resp.statusText,
+      headers: respHeaders
+    });
+
+    // Store in cache
+    await cache.put(cacheUrl, cacheResponse.clone());
+
+    return new Response(cacheResponse.body, {
+      status: cacheResponse.status,
+      statusText: cacheResponse.statusText,
+      headers: new Headers(cacheResponse.headers)
+    });
+  }
+
+  // For non-200 responses, don't cache, just return
+  const respHeaders = new Headers(resp.headers);
+  respHeaders.set("Access-Control-Allow-Origin", "*");
+
+  return new Response(resp.body, {
+    status: resp.status,
+    statusText: resp.statusText,
+    headers: respHeaders
+  });
 }
 
 function responseUnauthorized(url) {

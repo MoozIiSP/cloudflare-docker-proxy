@@ -46,6 +46,10 @@ The worker handles incoming requests and routes them based on hostname to approp
   - Parses `WWW-Authenticate` header from upstream
   - Auto-completes library prefix for Docker Hub (e.g., `busybox` → `library/busybox`)
   - Forwards user credentials if provided
+  - **Token Caching**: Tokens are cached for 4 minutes (safer than the 5-minute expiry) using Cloudflare's Cache API
+    - Cache key is based on: hostname, scope, and SHA-256 hash of authorization header
+    - Anonymous requests and authenticated requests are cached separately
+    - Only successful (200) token responses are cached
 - `/*`: All other paths proxied to upstream registry
 
 ### Docker Hub Special Cases
@@ -56,6 +60,10 @@ The worker handles incoming requests and routes them based on hostname to approp
 
 2. **Blob Redirect Handling**: Manually follows 307 redirects for blob downloads
    - Prevents passthrough to upstream without following redirect
+
+3. **Error Handling**: Improved 401 response handling
+   - If client has authorization but still gets 401, returns upstream error (image not found, access denied)
+   - If client has no authorization, returns auth challenge to trigger token acquisition
 
 ### Configuration
 
